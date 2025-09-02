@@ -53,10 +53,9 @@ const NavbarMain = () => {
             }`
           }
         >
-          Resume Screener 
+          Resume Guidance
         </NavLink>
-
-        <NavLink
+<NavLink
           to="/courses"
           onClick={closeMenu}
           className={({ isActive }) =>
@@ -69,8 +68,7 @@ const NavbarMain = () => {
         >
           Courses
         </NavLink>
-
-         <NavLink
+          <NavLink
           to="/mock-interview"
           onClick={closeMenu}
           className={({ isActive }) =>
@@ -83,6 +81,8 @@ const NavbarMain = () => {
         >
           Mock Interview
         </NavLink>
+
+        
 
         <NavLink
           to="/internships-jobs"

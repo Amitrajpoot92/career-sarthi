@@ -31,7 +31,7 @@ export default function Footer() {
             </li>
             <li>
               <a href="/resume-guidance" className="hover:text-pink-500 transition-colors">
-                📄 Resume Screener
+                📄 Resume Guidance
               </a>
             </li>
             <li>
