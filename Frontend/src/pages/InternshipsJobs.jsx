@@ -1,5 +1,8 @@
-import { useEffect, useState } from "react";
+ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+
+// 🌐 API Base URL setup
+const API_BASE = "https://joblogy.onrender.com";
 
 const InternshipsJobs = () => {
   const [locations, setLocations] = useState([]);
@@ -10,9 +13,9 @@ const InternshipsJobs = () => {
   const [recognition, setRecognition] = useState(null);
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [errorPopup, setErrorPopup] = useState(""); // ✅ NEW
+  const [errorPopup, setErrorPopup] = useState("");
 
-  // ✅ Load locations.json
+  // ✅ Load locations.json + Setup Speech Recognition
   useEffect(() => {
     fetch("/data/locations.json")
       .then((res) => res.json())
@@ -21,71 +24,64 @@ const InternshipsJobs = () => {
         setLocations(arr);
       });
 
-    // 🎙️ Speech Recognition
     if ("webkitSpeechRecognition" in window) {
       const recog = new window.webkitSpeechRecognition();
       recog.continuous = false;
       recog.interimResults = false;
       recog.lang = "en-US";
       recog.onresult = (event) => {
-        setDescription(
-          (prev) => prev + (prev ? " " : "") + event.results[0][0].transcript
-        );
+        setDescription(event.results[0][0].transcript);
+      };
+      recog.onerror = () => {
+        setErrorPopup("🎤 Voice recognition failed. Try again.");
       };
       setRecognition(recog);
     }
   }, []);
 
+  // 🎤 Mic handler
   const handleMicClick = () => {
-    if (!recognition) return;
-    if (recognition.isRecognizing) {
-      recognition.stop();
-      recognition.isRecognizing = false;
-    } else {
-      recognition.start();
-      recognition.isRecognizing = true;
+    if (!recognition) {
+      setErrorPopup("⚠️ Voice recognition not supported in this browser.");
+      return;
     }
+    recognition.start();
   };
 
-  // ✅ Fetch jobs from backend with validation
+  // 📡 Fetch jobs (using deployed backend API)
   const handleSearch = async () => {
-  if (!selectedCountry || !selectedState || !selectedCity || !description) {
-    setErrorPopup(
-      "⚠️ Please fill Job Description, Country, State, and City before searching!"
-    );
-    return;
-  }
-
-  setLoading(true);
-  try {
-    const res = await fetch("http://127.0.0.1:8000/api/search", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        description,
-        city: selectedCity,
-        state: selectedState,
-        country: selectedCountry,
-        date_posted: "all",
-      }),
-    });
-    const data = await res.json();
-
-    if (!data.jobs || data.jobs.length === 0) {
-      // ✅ Show popup if no results
-      setErrorPopup("🚫 No opportunities found. Try refining your search filters.");
-      setJobs([]); 
-    } else {
-      setJobs(data.jobs);
+    if (!description) {
+      setErrorPopup("⚠️ Please enter a job description.");
+      return;
     }
-  } catch (err) {
-    console.error("Error fetching jobs:", err);
-    setErrorPopup("Something went wrong while fetching jobs. Please try again.");
-  } finally {
-    setLoading(false);
-  }
-};
 
+    setLoading(true);
+    try {
+      const res = await fetch(`${API_BASE}/search`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          description,
+          country: selectedCountry,
+          state: selectedState,
+          city: selectedCity,
+        }),
+      });
+
+      const data = await res.json();
+      if (!data.results || data.results.length === 0) {
+        setErrorPopup("🚫 No opportunities found. Try refining your search filters.");
+        setJobs([]);
+      } else {
+        setJobs(data.results);
+      }
+    } catch (err) {
+      console.error("Error fetching jobs:", err);
+      setErrorPopup("Something went wrong while fetching jobs. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const states = locations.find((c) => c.name === selectedCountry)?.states || [];
   const cities = states.find((s) => s.name === selectedState)?.cities || [];
@@ -119,17 +115,17 @@ const InternshipsJobs = () => {
         <div>
           <label className="block mb-2 font-semibold">Job Description</label>
           <div className="flex gap-2">
-            <textarea
+            <input
+              type="text"
               className="w-full p-3 rounded-lg bg-[#0f0425] border border-gray-600 text-white focus:outline-none focus:border-pink-500"
-              rows="3"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="E.g. React Developer, Data Analyst, Cloud Intern..."
+              placeholder="E.g. Python Developer, React Intern..."
             />
             {recognition && (
               <button
                 onClick={handleMicClick}
-                className="px-4 py-2 bg-gradient-to-r from-indigo-500 to-pink-500 rounded-lg font-semibold hover:scale-105 transition-transform"
+                className="px-4 py-2 bg-green-500 rounded-lg font-semibold hover:scale-105 transition-transform"
               >
                 🎤
               </button>
@@ -209,54 +205,53 @@ const InternshipsJobs = () => {
 
       {/* Results */}
       <div className="mt-14 w-full max-w-6xl text-center">
-  {loading ? (
-    <p className="text-gray-400 text-lg">⏳ Searching opportunities...</p>
-  ) : (
-    jobs.length > 0 && (
-      <>
-        <h2 className="text-3xl font-semibold text-center mb-8">
-          🎯 Matching Opportunities
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {jobs.map((job, idx) => (
-            <motion.div
-              key={idx}
-              whileHover={{ scale: 1.05 }}
-              className="bg-[#1a103d] p-6 rounded-xl shadow-lg transition-transform hover:bg-gradient-to-r hover:from-indigo-500 hover:to-pink-500"
-            >
-              <h3 className="text-xl font-bold">{job.job_title}</h3>
-              <p className="text-sm text-gray-300 mt-1">
-                {job.employer_name}
-              </p>
-              <p className="text-sm">
-                📍 {job.job_city}, {job.job_state}
-              </p>
-              <p className="text-xs mt-2">
-                🗓️ Posted:{" "}
-                <span className="text-pink-300">{job.date_posted}</span>
-              </p>
-              <p className="text-xs">
-                ⭐ Match Score:{" "}
-                <span className="text-indigo-300">{job.match_score}%</span>
-              </p>
-              <a
-                href={job.job_apply_link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-4 inline-block bg-pink-500 px-4 py-2 rounded-full text-sm font-semibold hover:bg-pink-600 transition"
-              >
-                Apply Now →
-              </a>
-            </motion.div>
-          ))}
-        </div>
-      </>
-    )
-  )}
-</div>
+        {loading ? (
+          <p className="text-gray-400 text-lg">⏳ Searching opportunities...</p>
+        ) : (
+          jobs.length > 0 && (
+            <>
+              <h2 className="text-3xl font-semibold text-center mb-8">
+                🎯 Matching Opportunities
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                {jobs.map((job, idx) => (
+                  <motion.div
+                    key={idx}
+                    whileHover={{ scale: 1.05 }}
+                    className="bg-[#1a103d] p-6 rounded-xl shadow-lg transition-transform hover:bg-gradient-to-r hover:from-indigo-500 hover:to-pink-500"
+                  >
+                    <h3 className="text-xl font-bold">{job.job_title || "Untitled"}</h3>
+                    <p className="text-sm text-gray-300 mt-1">
+                      {job.employer_name || "N/A"}
+                    </p>
+                    <p className="text-sm">
+                      📍 {job.job_city || ""}, {job.job_state || ""}, {job.job_country || ""}
+                    </p>
+                    <p className="text-xs mt-2">
+                      🗓️ Posted:{" "}
+                      <span className="text-pink-300">{job.date_posted || "N/A"}</span>
+                    </p>
+                    <p className="text-xs">
+                      ⭐ Match Score:{" "}
+                      <span className="text-indigo-300">{job.match_score || 0}%</span>
+                    </p>
+                    <a
+                      href={job.job_apply_link || "#"}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-4 inline-block bg-pink-500 px-4 py-2 rounded-full text-sm font-semibold hover:bg-pink-600 transition"
+                    >
+                      Apply Now →
+                    </a>
+                  </motion.div>
+                ))}
+              </div>
+            </>
+          )
+        )}
+      </div>
 
-
-      {/* ✅ Decorated Error Popup */}
+      {/* ✅ Error Popup */}
       <AnimatePresence>
         {errorPopup && (
           <motion.div
@@ -265,11 +260,11 @@ const InternshipsJobs = () => {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/60"
-            onClick={() => setErrorPopup("")} // close on backdrop click
+            onClick={() => setErrorPopup("")}
           >
             <div
               className="bg-[#1a103d] text-white p-6 rounded-2xl shadow-2xl max-w-md w-[92%] text-center border border-pink-500"
-              onClick={(e) => e.stopPropagation()} // prevent closing on content click
+              onClick={(e) => e.stopPropagation()}
             >
               <h2 className="text-2xl font-bold text-pink-400 mb-3">🚫 Oops!</h2>
               <p className="text-gray-300 mb-6">{errorPopup}</p>

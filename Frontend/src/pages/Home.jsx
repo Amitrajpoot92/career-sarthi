@@ -1,5 +1,6 @@
-import { motion } from "framer-motion";
+ import { motion } from "framer-motion";
 import heroImage from "../assets/hero.webp";
+import { Link } from "react-router-dom";  // ✅ Import for navigation
 
 const Home = () => {
   return (
@@ -68,41 +69,70 @@ const Home = () => {
 
         {/* Feature Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div className="bg-[#1a103d] p-8 rounded-xl text-center shadow-lg transition-transform duration-300 hover:-translate-y-2 hover:bg-gradient-to-r hover:from-indigo-500 hover:to-pink-500">
-            👥
-            <h3 className="text-xl font-semibold mt-4 mb-2">Career Roadmaps</h3>
-            <p className="text-gray-300">Step-by-step learning paths designed for every career field – Web Development, Data Science, Cloud, and more.</p>
-          </div>
+          
+          {/* ✅ First Card → Career Roadmaps */}
+          <Link to="/chattapp">
+            <div className="bg-[#1a103d] p-8 rounded-xl text-center shadow-lg transition-transform duration-300 hover:-translate-y-2 hover:bg-gradient-to-r hover:from-indigo-500 hover:to-pink-500 cursor-pointer h-full flex flex-col justify-between">
+              👥
+              <h3 className="text-xl font-semibold mt-4 mb-2">Career Roadmaps</h3>
+              <p className="text-gray-300">
+                Step-by-step learning paths designed for every career field – Web Development, Data Science, Cloud, and more.
+              </p>
+            </div>
+          </Link>
 
-          <div className="bg-[#1a103d] p-8 rounded-xl text-center shadow-lg transition-transform duration-300 hover:-translate-y-2 hover:bg-gradient-to-r hover:from-indigo-500 hover:to-pink-500">
-            🤝
-            <h3 className="text-xl font-semibold mt-4 mb-2">Best Courses & Resources</h3>
-            <p className="text-gray-300">Discover top free and paid courses from trusted platforms to upskill faster.</p>
-          </div>
+          {/* ✅ Second Card → Courses */}
+          <Link to="/courses">
+            <div className="bg-[#1a103d] p-8 rounded-xl text-center shadow-lg transition-transform duration-300 hover:-translate-y-2 hover:bg-gradient-to-r hover:from-indigo-500 hover:to-pink-500 cursor-pointer h-full flex flex-col justify-between">
+              🤝
+              <h3 className="text-xl font-semibold mt-4 mb-2">Best Courses & Resources</h3>
+              <p className="text-gray-300">
+                Discover top free and paid courses from trusted platforms to upskill faster.
+              </p>
+            </div>
+          </Link>
 
-          <div className="bg-[#1a103d] p-8 rounded-xl text-center shadow-lg transition-transform duration-300 hover:-translate-y-2 hover:bg-gradient-to-r hover:from-indigo-500 hover:to-pink-500">
-            🧑‍💼
-            <h3 className="text-xl font-semibold mt-4 mb-2">Resume Builder & Guidance</h3>
-            <p className="text-gray-300">Create ATS-friendly resumes with expert tips to stand out from the crowd.</p>
-          </div>
+          {/* ✅ Third Card → Resume Guidance */}
+          <Link to="/resume-guidance">
+            <div className="bg-[#1a103d] p-8 rounded-xl text-center shadow-lg transition-transform duration-300 hover:-translate-y-2 hover:bg-gradient-to-r hover:from-indigo-500 hover:to-pink-500 cursor-pointer h-full flex flex-col justify-between">
+              🧑‍💼
+              <h3 className="text-xl font-semibold mt-4 mb-2">Resume Builder & Guidance</h3>
+              <p className="text-gray-300">
+                Create ATS-friendly resumes with expert tips to stand out from the crowd.
+              </p>
+            </div>
+          </Link>
 
-          <div className="bg-[#1a103d] p-8 rounded-xl text-center shadow-lg transition-transform duration-300 hover:-translate-y-2 hover:bg-gradient-to-r hover:from-indigo-500 hover:to-pink-500">
+          {/* Soft Skills */}
+          <div className="bg-[#1a103d] p-8 rounded-xl text-center shadow-lg transition-transform duration-300 hover:-translate-y-2 hover:bg-gradient-to-r hover:from-indigo-500 hover:to-pink-500 h-full flex flex-col justify-between">
             📋
             <h3 className="text-xl font-semibold mt-4 mb-2">Soft Skills Training</h3>
-            <p className="text-gray-300">Boost your communication, teamwork, leadership, and professional etiquette.</p>
+            <p className="text-gray-300">
+              Boost your communication, teamwork, leadership, and professional etiquette.
+            </p>
           </div>
 
-          <div className="bg-[#1a103d] p-8 rounded-xl text-center shadow-lg transition-transform duration-300 hover:-translate-y-2 hover:bg-gradient-to-r hover:from-indigo-500 hover:to-pink-500">
-            📁
-            <h3 className="text-xl font-semibold mt-4 mb-2">Mock Interviews</h3>
-            <p className="text-gray-300">Practice technical & HR interviews with real-time feedback to become job-ready.</p>
-          </div>
+          {/* ✅ Second Row, Second Card → Mock Interviews */}
+          <Link to="/mock-interview">
+            <div className="bg-[#1a103d] p-8 rounded-xl text-center shadow-lg transition-transform duration-300 hover:-translate-y-2 hover:bg-gradient-to-r hover:from-indigo-500 hover:to-pink-500 cursor-pointer h-full flex flex-col justify-between">
+              📁
+              <h3 className="text-xl font-semibold mt-4 mb-2">Mock Interviews</h3>
+              <p className="text-gray-300">
+                Practice technical & HR interviews with real-time feedback to become job-ready.
+              </p>
+            </div>
+          </Link>
 
-          <div className="bg-[#1a103d] p-8 rounded-xl text-center shadow-lg transition-transform duration-300 hover:-translate-y-2 hover:bg-gradient-to-r hover:from-indigo-500 hover:to-pink-500">
-            🧩
-            <h3 className="text-xl font-semibold mt-4 mb-2">Internship & Job Screener</h3>
-            <p className="text-gray-300">Find personalized job and internship opportunities based on your skills.</p>
-          </div>
+          {/* ✅ Second Row, Third Card → Internship & Jobs */}
+          <Link to="/internships-jobs">
+            <div className="bg-[#1a103d] p-8 rounded-xl text-center shadow-lg transition-transform duration-300 hover:-translate-y-2 hover:bg-gradient-to-r hover:from-indigo-500 hover:to-pink-500 cursor-pointer h-full flex flex-col justify-between">
+              🧩
+              <h3 className="text-xl font-semibold mt-4 mb-2">Internship & Job Screener</h3>
+              <p className="text-gray-300">
+                Find personalized job and internship opportunities based on your skills.
+              </p>
+            </div>
+          </Link>
         </div>
       </section>
     </motion.div>

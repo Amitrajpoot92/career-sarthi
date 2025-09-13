@@ -1,7 +1,10 @@
-export default function CodeReview() {
+   import React from "react";
+import Mock from "../components/Mock";   // <-- apne folder structure ke hisaab se path check karo
+
+export default function MockInterview() {
   return (
-    <div className="text-white min-h-screen flex items-center justify-center">
-      <h1 className="text-3xl font-bold">Mock Interview</h1>
+    <div className="min-h-screen bg-black text-white">
+      <Mock />
     </div>
   );
 }
