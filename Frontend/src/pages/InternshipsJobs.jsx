@@ -1,5 +1,15 @@
  import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import {
+  Briefcase,
+  Mic,
+  Rocket,
+  MapPin,
+  Calendar,
+  Star,
+  AlertTriangle,
+  Search,
+} from "lucide-react";
 
 // 🌐 API Base URL setup
 const API_BASE = "https://joblogy.onrender.com";
@@ -70,14 +80,18 @@ const InternshipsJobs = () => {
 
       const data = await res.json();
       if (!data.results || data.results.length === 0) {
-        setErrorPopup("🚫 No opportunities found. Try refining your search filters.");
+        setErrorPopup(
+          "🚫 No opportunities found. Try refining your search filters."
+        );
         setJobs([]);
       } else {
         setJobs(data.results);
       }
     } catch (err) {
       console.error("Error fetching jobs:", err);
-      setErrorPopup("Something went wrong while fetching jobs. Please try again.");
+      setErrorPopup(
+        "Something went wrong while fetching jobs. Please try again."
+      );
     } finally {
       setLoading(false);
     }
@@ -95,8 +109,9 @@ const InternshipsJobs = () => {
       transition={{ duration: 0.6 }}
     >
       {/* Title Section */}
-      <h1 className="text-4xl md:text-5xl font-bold mb-4 text-center">
-        🌟 Internship & Job Screener
+      <h1 className="text-4xl md:text-5xl font-bold mb-4 text-center flex items-center justify-center gap-3">
+        <Briefcase className="text-pink-500" size={40} />
+        Internship & Job Finder
       </h1>
       <p className="text-gray-400 max-w-2xl text-center mb-12">
         Find <span className="text-pink-400">personalized internships</span> and{" "}
@@ -106,8 +121,8 @@ const InternshipsJobs = () => {
 
       {/* Search Form */}
       <div className="bg-[#1a103d] p-8 rounded-2xl shadow-lg max-w-3xl w-full space-y-8 border border-gray-700">
-        <h2 className="text-2xl font-semibold text-center mb-4">
-          🔎 Search Filters
+        <h2 className="text-2xl font-semibold text-center mb-4 flex items-center justify-center gap-2">
+          <Search className="text-indigo-400" /> Search Filters
         </h2>
         <hr className="border-gray-700" />
 
@@ -125,9 +140,9 @@ const InternshipsJobs = () => {
             {recognition && (
               <button
                 onClick={handleMicClick}
-                className="px-4 py-2 bg-green-500 rounded-lg font-semibold hover:scale-105 transition-transform"
+                className="px-4 py-2 bg-green-500 rounded-lg font-semibold hover:scale-105 transition-transform flex items-center justify-center"
               >
-                🎤
+                <Mic size={20} />
               </button>
             )}
           </div>
@@ -197,9 +212,9 @@ const InternshipsJobs = () => {
         {/* Submit */}
         <button
           onClick={handleSearch}
-          className="bg-gradient-to-r from-indigo-500 to-pink-500 text-white px-6 py-3 rounded-full font-semibold w-full transition-transform duration-300 hover:scale-105"
+          className="bg-gradient-to-r from-indigo-500 to-pink-500 text-white px-6 py-3 rounded-full font-semibold w-full transition-transform duration-300 hover:scale-105 flex items-center justify-center gap-2"
         >
-          {loading ? "🔄 Searching..." : "🚀 Find Opportunities"}
+          {loading ? "🔄 Searching..." : <><Rocket size={20} /> Find Opportunities</>}
         </button>
       </div>
 
@@ -210,8 +225,8 @@ const InternshipsJobs = () => {
         ) : (
           jobs.length > 0 && (
             <>
-              <h2 className="text-3xl font-semibold text-center mb-8">
-                🎯 Matching Opportunities
+              <h2 className="text-3xl font-semibold text-center mb-8 flex items-center justify-center gap-2">
+                <Briefcase className="text-pink-400" /> Matching Opportunities
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 {jobs.map((job, idx) => (
@@ -220,20 +235,27 @@ const InternshipsJobs = () => {
                     whileHover={{ scale: 1.05 }}
                     className="bg-[#1a103d] p-6 rounded-xl shadow-lg transition-transform hover:bg-gradient-to-r hover:from-indigo-500 hover:to-pink-500"
                   >
-                    <h3 className="text-xl font-bold">{job.job_title || "Untitled"}</h3>
+                    <h3 className="text-xl font-bold">
+                      {job.job_title || "Untitled"}
+                    </h3>
                     <p className="text-sm text-gray-300 mt-1">
                       {job.employer_name || "N/A"}
                     </p>
-                    <p className="text-sm">
-                      📍 {job.job_city || ""}, {job.job_state || ""}, {job.job_country || ""}
+                    <p className="text-sm flex items-center justify-center gap-1">
+                      <MapPin size={16} /> {job.job_city || ""},{" "}
+                      {job.job_state || ""}, {job.job_country || ""}
                     </p>
-                    <p className="text-xs mt-2">
-                      🗓️ Posted:{" "}
-                      <span className="text-pink-300">{job.date_posted || "N/A"}</span>
+                    <p className="text-xs mt-2 flex items-center justify-center gap-1">
+                      <Calendar size={14} /> Posted:{" "}
+                      <span className="text-pink-300">
+                        {job.date_posted || "N/A"}
+                      </span>
                     </p>
-                    <p className="text-xs">
-                      ⭐ Match Score:{" "}
-                      <span className="text-indigo-300">{job.match_score || 0}%</span>
+                    <p className="text-xs flex items-center justify-center gap-1">
+                      <Star size={14} /> Match Score:{" "}
+                      <span className="text-indigo-300">
+                        {job.match_score || 0}%
+                      </span>
                     </p>
                     <a
                       href={job.job_apply_link || "#"}
@@ -266,7 +288,9 @@ const InternshipsJobs = () => {
               className="bg-[#1a103d] text-white p-6 rounded-2xl shadow-2xl max-w-md w-[92%] text-center border border-pink-500"
               onClick={(e) => e.stopPropagation()}
             >
-              <h2 className="text-2xl font-bold text-pink-400 mb-3">🚫 Oops!</h2>
+              <h2 className="text-2xl font-bold text-pink-400 mb-3 flex items-center justify-center gap-2">
+                <AlertTriangle className="text-red-400" /> Oops!
+              </h2>
               <p className="text-gray-300 mb-6">{errorPopup}</p>
               <button
                 onClick={() => setErrorPopup("")}

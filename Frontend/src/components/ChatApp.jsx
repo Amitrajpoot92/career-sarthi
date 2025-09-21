@@ -17,7 +17,7 @@ function saveSessions(sessions) {
 }
 
 export default function ChatApp({
-  backendUrl = import.meta.env.VITE_BACKEND_URL || "https://backend-api-67ei.onrender.com",
+  backendUrl = import.meta.env.VITE_BACKEND_URL || "https://career-advisor-chatbot-5ifz.onrender.com",
   open = false,
 }) {
   const [sessions, setSessions] = useState([]);
@@ -118,28 +118,13 @@ export default function ChatApp({
       >
         {currentMessages.length === 0 && !loading && (
           <div className="text-center text-gray-400 py-6">
-            <img src="/careerist_logo.png" alt="Logo" className="mx-auto mb-4 w-20 h-20" />
+             
             <div className="text-lg font-semibold mb-2">Your Buddy for Career Growth 🚀</div>
             <div className="text-sm text-pink-400 font-medium">Powered by Gemini 2.5-Flash</div>
             <div className="mt-6 grid gap-3 max-w-md mx-auto">
-              <button
-                onClick={() => sendMessage(null, "What are the key skills for an AI Engineer?")}
-                className="bg-[#1a103d] hover:bg-gradient-to-r hover:from-indigo-500 hover:to-pink-500 p-3 rounded-xl"
-              >
-                What are the key skills for an AI Engineer?
-              </button>
-              <button
-                onClick={() => sendMessage(null, "How can I prepare for a software engineering interview?")}
-                className="bg-[#1a103d] hover:bg-gradient-to-r hover:from-indigo-500 hover:to-pink-500 p-3 rounded-xl"
-              >
-                How can I prepare for a software engineering interview?
-              </button>
-              <button
-                onClick={() => sendMessage(null, "Provide a detailed roadmap for a successful entrepreneur.")}
-                className="bg-[#1a103d] hover:bg-gradient-to-r hover:from-indigo-500 hover:to-pink-500 p-3 rounded-xl"
-              >
-                Provide a detailed roadmap for a successful entrepreneur.
-              </button>
+               
+              
+               
             </div>
           </div>
         )}

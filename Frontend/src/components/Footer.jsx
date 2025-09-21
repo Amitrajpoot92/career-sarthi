@@ -12,7 +12,7 @@ export default function Footer() {
         {/* Brand & Mission */}
         <div className="flex flex-col gap-4">
           <h2 className="text-3xl font-extrabold bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent"> 
-            PathFinder
+            Career-Sarthi
           </h2>
           <p className="text-gray-400 text-sm leading-relaxed">
             🌟 Your all-in-one mentor for skills, courses, resumes, internships, and career growth.
@@ -26,27 +26,27 @@ export default function Footer() {
           <ul className="flex flex-col gap-2">
             <li>
               <a href="/" className="hover:text-pink-500 transition-colors">
-                🏠 Home
+                Home
               </a>
             </li>
             <li>
               <a href="/resume-guidance" className="hover:text-pink-500 transition-colors">
-                📄 Resume Guidance
+                Resume Guidance
               </a>
             </li>
             <li>
               <a href="/courses" className="hover:text-pink-500 transition-colors">
-                📚 Courses
+                 Resources
               </a>
             </li>
             <li>
               <a href="/internships-jobs" className="hover:text-pink-500 transition-colors">
-                💼 Internships & Jobs
+                Internships & Jobs
               </a>
             </li>
             <li>
               <a href="/mock-interview" className="hover:text-pink-500 transition-colors">
-                🎤 Mock Interviews
+                Mock Interviews
               </a>
             </li>
           </ul>
@@ -59,32 +59,32 @@ export default function Footer() {
             <li className="flex items-center gap-2">
               <Mail size={18} className="text-pink-400" />
               <a
-                href="mailto:info@pathfinder.com"
+                 
                 className="hover:text-pink-500 transition-colors"
               >
-                info@pathfinder.com
+                info@Career-Sarthi.com
               </a>
             </li>
             <li className="flex items-center gap-2">
               <Twitter size={18} className="text-sky-400" />
               <a
-                href="https://twitter.com/pathfinder"
+                 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-sky-400 transition-colors"
               >
-                @PathFinder
+                @Career-Sarthi
               </a>
             </li>
             <li className="flex items-center gap-2">
               <Linkedin size={18} className="text-blue-500" />
               <a
-                href="https://linkedin.com/company/pathfinder"
+                 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-blue-400 transition-colors"
               >
-                PathFinder
+                Career-Sarthi
               </a>
             </li>
           </ul>
@@ -96,7 +96,7 @@ export default function Footer() {
 
       {/* Bottom Section */}
       <div className="w-full text-center text-gray-500 text-sm py-6">
-        &copy; {new Date().getFullYear()} PathFinder. All rights reserved.
+        &copy; {new Date().getFullYear()} Career-Sarthi. All rights reserved.
       </div>
     </footer>
   );

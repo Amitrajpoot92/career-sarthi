@@ -117,14 +117,14 @@ const Resources = ({ resources = defaultResources }) => {
           <Bot size={48} className="text-pink-500" />
         </div>
         <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-indigo-500 to-pink-500 bg-clip-text text-transparent">
-          AI Career Assistant
+          AI Softskill Training
         </h2>
         <p className="text-gray-300 max-w-2xl mx-auto mb-6">
-          Get personalized guidance powered by AI. Ask questions, explore
-          learning paths, and unlock your career growth.
+          Enhance your communication, confidence, and interview skills with AI-powered personalized training.
+Get real-time feedback and practical exercises to excel in professional interactions.
         </p>
         <button className="bg-gradient-to-r from-indigo-500 to-pink-500 text-white px-6 py-3 rounded-full font-semibold transition-transform duration-300 hover:scale-105">
-          Try AI Model
+          Coming Soon
         </button>
       </div>
 

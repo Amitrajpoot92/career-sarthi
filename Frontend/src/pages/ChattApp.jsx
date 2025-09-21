@@ -29,12 +29,13 @@ function loadSessions() {
     return [];
   }
 }
+
 function saveSessions(sessions) {
   localStorage.setItem("careerist_sessions", JSON.stringify(sessions));
 }
 
 export default function ChattApp({
-  backendUrl = import.meta.env.VITE_BACKEND_URL || "https://backend-api-67ei.onrender.com",
+  backendUrl = import.meta.env.VITE_BACKEND_URL || "https://career-advisor-chatbot-5ifz.onrender.com",
 }) {
   const [sessions, setSessions] = useState(loadSessions());
   const [currentSession, setCurrentSession] = useState(
@@ -44,7 +45,7 @@ export default function ChattApp({
   const [loading, setLoading] = useState(false);
   const [loadingPhrase, setLoadingPhrase] = useState(loadingPhrases[0]);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
-  const endRef = useRef(null);
+  const containerRef = useRef(null);
   const textareaRef = useRef(null);
 
   const currentMessages =
@@ -60,6 +61,23 @@ export default function ChattApp({
       return updated;
     });
   };
+
+  // Scroll to top on initial render
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.scrollTop = 0;
+    }
+  }, []);
+
+  // Scroll to bottom only when new messages are added
+  useEffect(() => {
+    if (currentMessages.length > 0) {
+      containerRef.current?.scrollTo({
+        top: containerRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  }, [currentMessages]);
 
   useEffect(() => {
     if (!currentSession) return;
@@ -82,10 +100,6 @@ export default function ChattApp({
     };
     loadHistory();
   }, [currentSession]);
-
-  useEffect(() => {
-    endRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [currentMessages]);
 
   useEffect(() => {
     if (loading) {
@@ -185,7 +199,7 @@ export default function ChattApp({
     setQuery("");
     setLoading(false);
     if (textareaRef.current) {
-      textareaRef.current.style.height = "52px"; // reset to default height
+      textareaRef.current.style.height = "52px";
     }
   };
 
@@ -292,8 +306,8 @@ export default function ChattApp({
           </div>
         </header>
 
-        <main className="flex-1 p-4 flex flex-col overflow-hidden">
-          <div className="flex-1 overflow-auto p-6 bg-[#1a103d] rounded-2xl shadow-lg">
+        <main ref={containerRef} className="flex-1 p-4 flex flex-col overflow-auto chat-container">
+          <div className="flex-1 p-6 bg-[#1a103d] rounded-2xl shadow-lg">
             {currentMessages.length === 0 && (
               <div className="text-center text-gray-400 py-12">
                 <div className="text-lg font-semibold mb-2">
@@ -335,7 +349,6 @@ export default function ChattApp({
                         : "bg-[#2a1b56] text-gray-200 rounded-bl-none"
                     }`}
                   >
-                    {/* Markdown with modern styling */}
                     <ReactMarkdown
                       remarkPlugins={[remarkGfm]}
                       rehypePlugins={[rehypeRaw]}
@@ -356,15 +369,6 @@ export default function ChattApp({
                   </div>
                 </div>
               ))}
-              {loading && (
-                <div className="flex justify-start">
-                  <div className="px-4 py-3 text-gray-400 flex items-center space-x-2">
-                    <span className="animate-spin">⚡</span>
-                    <span>{loadingPhrase}</span>
-                  </div>
-                </div>
-              )}
-              <div ref={endRef} />
             </div>
           </div>
 

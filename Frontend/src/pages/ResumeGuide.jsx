@@ -98,7 +98,7 @@ export default function ResumeGuide() {
             type="submit"
             className="bg-gradient-to-r from-indigo-500 to-pink-500 text-white px-6 py-3 rounded-full font-semibold w-full transition-transform duration-300 hover:scale-105"
           >
-            {loading ? "🔄 Analyzing..." : "🚀 Analyze Resume"}
+            {loading ? "🔄 Analyzing..." : " Analyze Resume"}
           </button>
         </form>
       </div>

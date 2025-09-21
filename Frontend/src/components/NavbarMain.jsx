@@ -17,7 +17,7 @@ const NavbarMain = () => {
         style={{ fontFamily: "Orbitron, sans-serif" }}
       >
         <div className="text-xl md:text-2xl font-medium tracking-wider uppercase">
-          PathFinder
+          Career-Sarthi
         </div>
 
         {/* Mobile menu */}
@@ -40,7 +40,7 @@ const NavbarMain = () => {
             Resume Guidance
           </NavLink>
           <NavLink to="/courses" onClick={closeMenu}>
-            Courses
+             Resources
           </NavLink>
           <NavLink to="/mock-interview" onClick={closeMenu}>
             Mock Interview

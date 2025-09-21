@@ -11,6 +11,7 @@ import Courses from "./pages/Courses.jsx";
 import ResumeGuide from "./pages/ResumeGuide.jsx";
 import InternshipsJobs from "./pages/InternshipsJobs.jsx";
 import ChattApp from "./pages/ChattApp";
+import Hack from "./pages/Hack";
 import { AuthProvider } from "./context/AuthContext";
 
 // 👇 ScrollToTop component
@@ -41,6 +42,7 @@ function App() {
             <Route path="/internships-jobs" element={<InternshipsJobs />} />
             <Route path="/mock-interview" element={<MockInterview />} />
             <Route path="/chattapp" element={<ChattApp />} />
+            <Route path="/hack" element={<Hack />} />
           </Routes>
 
           <ChatWidget />
